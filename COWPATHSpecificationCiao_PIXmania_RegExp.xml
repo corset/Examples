@@ -1,0 +1,24 @@
+<scxml initial="COWPATH_state" name="" version="1.0" xmlns="http://www.w3.org/2005/07/scxml" 
+  clock="true" notes="true" previewEnable="false"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<state id="COWPATH_state">
+		<initial>
+			<transition event="COWPATH:LOAD" cond="/http:\\/\\/www\\.ciao\\.co\\.uk\\/(?!sr\\/)(.)*/" target="/http:\\/\\/www\\.ciao\\.co\\.uk\\/(?!sr\\/)(.)*/"/>
+		</initial>
+		<state id="/http:\\/\\/www\\.ciao\\.co\\.uk\\/(?!sr\\/)(.)*/">
+			<transition event="COWPATH:CLICK" cond="ciao2pixmania" target="http://www.pixmania.co.uk/search/*">
+				<script>GoTo("http://www.pixmania.co.uk/index.html").
+							  Paste("$item").Into("//*[@id='search']").
+							  Click("//*[@id='search_bttn']");</script>
+			</transition>
+			<onentry>
+				<script>Copy("//*[@id='product_name']").Into("$item");</script>
+			</onentry>
+		</state>
+		<state id="http://www.pixmania.co.uk/search/*">
+			<transition event="COWPATH:CLICK" cond="pixmania2ciao" target="/http:\\/\\/www\\.ciao\\.co\\.uk\\/(?!sr\\/)(.)*/"/>
+		</state>
+	</state>
+</scxml>
+
+
+

@@ -1,0 +1,23 @@
+<scxml initial="COWPATH_state" name="" version="1.0" xmlns="http://www.w3.org/2005/07/scxml" 
+			 clock="true" notes="true"  previewEnable="false"   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<state id="COWPATH_state">
+		<initial>
+			<transition  event="COWPATH:LOAD" cond="http://openconcept.ca/blog/mgifford/text-list-all-countries-world" 
+							   target="http://openconcept.ca/blog/mgifford/text-list-all-countries-world"/>
+		</initial>
+		<state id="http://openconcept.ca/blog/mgifford/text-list-all-countries-world" structurePattern="//*[@class='field-item even']/pre" contentPattern="\\n">			
+			<transition event="COWPATH:CLICK" cond="openconcept2wikipedia" target="http://en.wikipedia.org/wiki/*">
+				<script>GoTo("http://www.wikipedia.org/").
+							  Paste("$country").Into("*//input[@id='searchInput']").
+							  Click("*//input[@class='formBtn']");</script>
+			</transition>
+			<onentry>
+				<script>Copy("text()").Into("$country");</script>
+			</onentry>
+		</state>
+		<state id="http://en.wikipedia.org/wiki/*">
+			<transition event="COWPATH:CLICK" cond="wikipedia2openconcept" target="http://openconcept.ca/blog/mgifford/text-list-all-countries-world"/>
+		</state>		
+	</state>
+</scxml>		
+	

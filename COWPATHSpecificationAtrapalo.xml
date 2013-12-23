@@ -1,0 +1,34 @@
+<scxml initial="COWPATH_state" name="" version="1.0" xmlns="http://www.w3.org/2005/07/scxml" 
+    clock="true" notes="true"  previewEnable="false"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<state id="COWPATH_state">
+		<initial>
+			<transition event="COWPATH:LOAD" cond="http://www.atrapalo.com/vuelos/resultados_ajax/*" 
+							  target="http://www.atrapalo.com/vuelos/resultados_ajax/*"/>
+		</initial>
+		<state id="http://www.atrapalo.com/vuelos/resultados_ajax/*">
+			<transition event="COWPATH:CLICK" cond="atrapalo2weather" target="http://www.eltiempo.es/*">
+				<script>GoTo("http://www.eltiempo.es/").
+							  Paste("$city").Into("//input[@class='ac_input' and @id='q']").
+							  Click("//p[@class='submit' and position()=2]/input");</script>
+			</transition>
+			<transition event="COWPATH:CLICK" cond="atrapalo2wikipedia" target="http://en.wikipedia.org/wiki/*">
+				<script>GoTo("http://www.wikipedia.org/").
+							  Paste("$city").Into("*//input[@id='searchInput']").
+							  Click("*//input[@class='formBtn']");</script>
+			</transition>
+			<onentry>
+				<script>Copy("//span[@class='block' and position()=2]/span[@class='bold']").Into("$city");</script>
+			</onentry>
+		</state>
+		<state id="http://www.eltiempo.es/*">
+			<transition event="COWPATH:CLICK" cond="tiempo2atrapalo" target="http://www.atrapalo.com/vuelos/resultados_ajax/*"/>
+		</state>
+		<state id="http://en.wikipedia.org/wiki/*">
+			<transition event="COWPATH:CLICK" cond="wiki2atrapalo" target="http://www.atrapalo.com/vuelos/resultados_ajax/*"/>
+		</state>
+	</state>
+</scxml>
+
+
+
+

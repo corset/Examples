@@ -1,0 +1,28 @@
+<scxml initial="COWPATH_state" name="" version="1.0" xmlns="http://www.w3.org/2005/07/scxml" 
+			 clock="true" notes="true" previewEnable="false" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<state id="COWPATH_state">
+		<initial>			
+			<transition event="COWPATH:LOAD" cond="http://dblp.uni-trier.de/pers/*" target="http://dblp.uni-trier.de/pers/*"/>
+		</initial>
+		<state id="http://dblp.uni-trier.de/pers/*" structurePattern="//*[@class='data']">
+			<transition event="COWPATH:CLICK" cond="dblp2gate" target="https://www.researchgate.net/literature.Literature.html?nav=pubs">
+				<script>GoTo("https://www.researchgate.net/literature.Literature.html?nav=pubs").
+							  Click("//*[@class='js-add btn btn-promote btn-large btn-fullwidth']").
+							  Click("//*[@class='dialog-nav-item item-link option-1 action-claim-publications']").
+							  Click("//*[@class='item-link option-3 action-manual-entry']").
+							  Paste("$title").Into("//*[@id='rg-modules-literature-actions-AddPublicationsDialogPublicationTitleForm-publicationTitle']").
+							  Click("//*[@value='Continue']").Paste("$yearPublication").Into("//*[@id='publication-year']").
+							  Paste("$firstAuthor").Into("//*[@id='rg-modules-literature-actions-AddPublicationsDialogManualForm-authors']");
+				</script>
+			</transition>
+			<onentry>
+				<script>Copy("span[last()]").Into("$title").Copy("span[1]").Into("$firstAuthor").Copy("a[last()]","[0-9]+").Into("$yearPublication");
+				</script>
+			</onentry>
+		</state>
+		<state id="https://www.researchgate.net/literature.Literature.html?nav=pubs">
+			<transition event="COWPATH:CLICK" cond="researchgate2dblp" target="http://dblp.uni-trier.de/pers/*"/>
+		</state>
+	</state>
+</scxml>		
+	
