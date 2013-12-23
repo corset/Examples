@@ -1,14 +1,11 @@
-<scxml initial="COWPATH_state" name="" version="1.0" xmlns="http://www.w3.org/2005/07/scxml" 
-    clock="true" notes="true" previewEnable="false"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<scxml initial="COWPATH_state" name="" version="1.0" xmlns="http://www.w3.org/2005/07/scxml" clock="true" notes="true" previewEnable="false"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<state id="COWPATH_state">
 		<initial>
 			<transition  event="COWPATH:LOAD" cond="http://www.fnac.es/*" target="http://www.fnac.es/*"/>
 		</initial>
 		<state id="http://www.fnac.es/*" structurePattern="//*[@class='nav-diaporama']/span/a/img">
 			<transition event="COWPATH:CLICK" cond="fnac2kelkoo" target="http://shopping.kelkoo.es/*">
-				<script>GoTo("http://www.kelkoo.es/").
-							  Paste("$item_name").Into("//*[@name='siteSearchQuery']").
-							  Click("//*[@type='submit']");</script>
+				<script>GoTo("http://www.kelkoo.es/").Paste("$item_name").Into("//*[@name='siteSearchQuery']").Click("//*[@type='submit']");</script>
 			</transition>
 			<onentry>
 				<script>Copy("//*[@class='titre dispeblock']/text()").Into("$item_name");</script>

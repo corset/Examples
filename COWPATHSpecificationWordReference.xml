@@ -1,14 +1,11 @@
-<scxml initial="COWPATH_state" name="" version="1.0" xmlns="http://www.w3.org/2005/07/scxml" 
-    clock="true" notes="true" previewEnable="false"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<scxml initial="COWPATH_state" name="" version="1.0" xmlns="http://www.w3.org/2005/07/scxml" clock="true" notes="true" previewEnable="false"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<state id="COWPATH_state">
 		<initial>
 			<transition  event="COWPATH:LOAD" cond="http://www.wordreference.com/*" target="http://www.wordreference.com/*"/>
 		</initial>
 		<state id="http://www.wordreference.com/*">
 			<transition event="COWPATH:CLICK" cond="wordreference2bab" target="http://es.bab.la*">
-				<script>GoTo("http://es.bab.la/").
-							  Paste("$word").Into("//input[@id='babQ']").
-							  Click("//button[@class='btn btn-primary']");</script>
+				<script>GoTo("http://es.bab.la/").Paste("$word").Into("//input[@id='babQ']").Click("//button[@class='btn btn-primary']");</script>
 			</transition>
 			<onentry>
 				<script>Copy("//div[@id='articleHead']//strong").Into("$word");</script>

@@ -1,11 +1,9 @@
-<scxml initial="COWPATH_state" name="" version="1.0" xmlns="http://www.w3.org/2005/07/scxml" 
-    clock="true" notes="true" previewEnable="false"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<scxml initial="COWPATH_state" name="" version="1.0" xmlns="http://www.w3.org/2005/07/scxml" clock="true" notes="true" previewEnable="false"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<state id="COWPATH_state">
 		<initial>
 			<transition event="COWPATH:LOAD" cond="http://www.nba.com/teams/" target="http://www.nba.com/teams/"/>
 		</initial>
-		<state id="http://www.nba.com/teams/" structurePattern="/html/body/div[@class='nbaPage']/div[@id='nbaMainSection']/
-						div[@id='nbaContent']/div[@id='nbateamsTable']/table/tbody/tr/td/table/tbody/tr[1]/td[@class='nbateamname']">
+		<state id="http://www.nba.com/teams/" structurePattern="/html/body/div[@class='nbaPage']/div[@id='nbaMainSection']/div[@id='nbaContent']/div[@id='nbateamsTable']/table/tbody/tr/td/table/tbody/tr[1]/td[@class='nbateamname']">
 			<transition event="COWPATH:CLICK" cond="nba2wikipedia" target="http://en.wikipedia.org/wiki/*">
 				<script>GoTo("http://www.wikipedia.org/").Paste("$team_name").Into("*//input[@id='searchInput']").Click("*//input[@class='formBtn']");</script>
 			</transition>

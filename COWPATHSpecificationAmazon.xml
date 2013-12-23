@@ -6,10 +6,7 @@
 		</initial>
 		<state id="http://www.amazon.com/*=books*">
 			<transition event="COWPATH:CLICK" cond="amazon2alibris" target="http://www.alibris.co.uk/booksearch?*">
-				<script>GoTo("http://www.alibris.co.uk/booksearch").
-							  Paste("$bookIsbn").Into("//*[@id='searchBox']").
-							  Click("//*[@alt='go']");
-				</script>
+				<script>GoTo("http://www.alibris.co.uk/booksearch").Paste("$bookIsbn").Into("//*[@id='searchBox']").Click("//*[@alt='go']");</script>
 			</transition>
 			<onentry>
 				<script>Copy("//div[@id='detail-bullets'][1]//li/b[text()='ISBN-10:']/../text()").Into("$bookIsbn");</script>
@@ -18,10 +15,7 @@
 		<state id="http://www.alibris.co.uk/booksearch?*">
 			<transition event="COWPATH:CLICK" cond="alibris2amazon" target="http://www.amazon.com/*=books*"/>
 			<transition event="COWPATH:CLICK" cond="alibris2goodReads" target="http://www.goodreads.com/book/show/*">
-				<script>GoTo("http://www.goodreads.com/book").
-				              Paste("$bookIsbn").Into("//*[@id='explore_search_query']").
-							  Click("//*[@class='searchButton button']");
-				</script>
+				<script>GoTo("http://www.goodreads.com/book").Paste("$bookIsbn").Into("//*[@id='explore_search_query']").Click("//*[@class='searchButton button']");</script>
 			</transition>
 		</state>
 		<state id="http://www.goodreads.com/book/show/*">

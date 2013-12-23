@@ -1,15 +1,11 @@
-<scxml initial="COWPATH_state" name="" version="1.0" xmlns="http://www.w3.org/2005/07/scxml" 
-			clock="true" notes="true" previewEnable="false"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<scxml initial="COWPATH_state" name="" version="1.0" xmlns="http://www.w3.org/2005/07/scxml" clock="true" notes="true" previewEnable="false"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<state id="COWPATH_state">
 		<initial>
 			<transition event="COWPATH:LOAD" cond="http://www.ciao.co.uk/*" target="http://www.ciao.co.uk/*"/>
 		</initial>	
 		<state id="http://www.ciao.co.uk/*" structurePattern="//*[@id='product_image']">
 			<transition event="COWPATH:CLICK" cond="ciao2pixmania" target="http://www.pixmania.co.uk/search/*">
-				<script>GoTo("http://www.pixmania.co.uk/index.html").
-							  Paste("$item").Into("//*[@id='search']").
-							  Click("//*[@id='search_bttn']");
-				</script>
+				<script>GoTo("http://www.pixmania.co.uk/index.html").Paste("$item").Into("//*[@id='search']").Click("//*[@id='search_bttn']");</script>
 			</transition>
 			<onentry>
 				<script>Copy("//*[@id='product_name']").Into("$item");</script>
