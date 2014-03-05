@@ -1,19 +1,15 @@
-<scxml initial="COWPATH_state" name="" version="1.0" xmlns="http://www.w3.org/2005/07/scxml" clock="true" notes="true" previewEnable="false"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-	<state id="COWPATH_state">
-		<initial>
-			<transition  event="COWPATH:LOAD" cond="http://www.wordreference.com/*" target="http://www.wordreference.com/*"/>
-		</initial>
-		<state id="http://www.wordreference.com/*">
-			<transition event="COWPATH:CLICK" cond="wordreference2bab" target="http://es.bab.la*">
-				<script>GoTo("http://es.bab.la/").Paste("$word").Into("//input[@id='babQ']").Click("//button[@class='btn btn-primary']");</script>
-			</transition>
-			<onentry>
-				<script>Copy("//div[@id='articleHead']//strong").Into("$word");</script>
-			</onentry>
-		</state>
-		<state id="http://es.bab.la*">
-			<transition event="COWPATH:CLICK" cond="bab2wordreference" target="http://www.wordreference.com/*"/>
-		</state>
+<scxml version="1.0" xmlns="http://www.w3.org/2005/07/scxml" clock="true" notes="true" previewEnable="false" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3.org/2005/07/scxml file:///C:/Documents%20and%20Settings/jdesosa/Datos%20de%20programa/Mozilla/Firefox/Profiles/70ra2fui.default/extensions/timeout406COWPATH@onekin.org/content/default/cowpath.xsd">
+<webflow id="wordtranslate" initial="wordreference">
+	<state id="wordreference" URLPattern="http://www.wordreference.com/*">
+		<transition event="COWPATH:CLICK" cond="['wordreference2bab']" target="bab">
+			<script>GoTo("http://es.bab.la/").Paste("$word").Into("//input[@id='babQ']").Click("//button[@class='btn btn-primary']");</script>
+		</transition>
+		<onentry>
+			<script>Copy("//div[@id='articleHead']/h3/strong").Into("$word");</script>
+		</onentry>
 	</state>
+	<state id="bab" URLPattern="http://es.bab.la*">
+		<transition event="COWPATH:CLICK" cond="['back2wordreference']" target="wordreference"/>
+	</state>
+</webflow>
 </scxml>
-

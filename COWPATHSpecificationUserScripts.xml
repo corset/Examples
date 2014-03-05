@@ -1,28 +1,24 @@
-<scxml initial="COWPATH_state" name="" version="1.0" xmlns="http://www.w3.org/2005/07/scxml" clock="true" notes="true" previewEnable="false" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-	<state id="COWPATH_state">
-		<initial>
-			<transition  event="COWPATH:LOAD" cond="https://userscripts.org/scripts/review/*" target="https://userscripts.org/scripts/review/*"/>
-		</initial>
-		<state id="https://userscripts.org/scripts/review/*">
-			<transition event="COWPATH:CLICK" cond="userScript2complexity" target="http://jscomplexity.org/#results">
-				<script>GoTo("http://jscomplexity.org/").Paste("$script").Into("//textarea[@class='code']").Click("//input[@class='button']");</script>
-			</transition>
-			<onentry>
-				<script>Copy("//pre[@id='source']").Into("$script").Copy("//h2[@class='title']/a").Into("$ScriptName");</script>
-			</onentry>
-		</state>
-		<state id="http://jscomplexity.org/#results">
-		    <transition event="COWPATH:CLICK" cond="complexity2userScript" target="https://userscripts.org/scripts/review/*"/>
-			<transition event="COWPATH:CLICK" cond="complexity2chartTool" target="http://www.onlinecharttool.com/graph?selected_graph=line">
-				<script>GoTo("http://www.onlinecharttool.com/graph?selected_graph=line").Click("//*[@class='btn-next']").Click("//*[@id='design-param-dataset_options_line_num_groups']/option[4]").Paste("$maintainabilityIndex").Into("//tr[last()]/td[3]/input").Paste("$physicalLOC").Into("//tr[last()]/td[4]/input").Paste("$logicalLOC").Into("//tr[last()]/td[5]/input").Paste("$aggregateCyclomaticComplexity").Into("//tr[last()]/td[6]/input").Paste("$ScriptName").Into("//tr[last()]/td[2]/input").Paste("$maintainabilityIndexText").Into("//input[@class='text' and @id='design-param-datagroup_options_line_group_label_1']").Paste("$physicalLOCText").Into("//input[@class='text' and @id='design-param-datagroup_options_line_group_label_2']").Paste("$logicalLOCText").Into("//input[@class='text' and @id='design-param-datagroup_options_line_group_label_3']").Paste("$aggregateCyclomaticComplexitytext").Into("//input[@class='text' and @id='design-param-datagroup_options_line_group_label_4']").Click("//select[@class='sel07 dropdown dropdown-num_items num_items' and @id='design-param-dataset_options_line_num_items']/option[@selected]/following-sibling::option[1]").Click("//*[@class='btn-next']").Click("//*[@class='btn-next']");</script>
-			</transition>
-			<onentry>
-				<script>Copy("//*[@class='results']/li[1]/span[2]").Into("$maintainabilityIndex").Copy("//*[@class='results']/li[2]/span[2]").Into("$physicalLOC").Copy("//*[@class='results']/li[3]/span[2]").Into("$logicalLOC").Copy("//*[@class='results']/li[4]/span[2]").Into("$aggregateCyclomaticComplexity").Copy("//*[@class='results']/li[1]/span[1]").Into("$maintainabilityIndexText").Copy("//*[@class='results']/li[2]/span[1]").Into("$physicalLOCText").Copy("//*[@class='results']/li[3]/span[1]").Into("$logicalLOCText").Copy("//*[@class='results']/li[4]/span[1]").Into("$aggregateCyclomaticComplexitytext");</script>
-			</onentry>
-		</state>
-		<state id="http://www.onlinecharttool.com/graph?selected_graph=line">
-			<transition event="COWPATH:CLICK" cond="chartTool2userScript" target="https://userscripts.org/scripts/review/*"/>
-		</state>
+<scxml version="1.0" xmlns="http://www.w3.org/2005/07/scxml" clock="true" notes="true" previewEnable="false" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3.org/2005/07/scxml file:///C:/Documents%20and%20Settings/jdesosa/Datos%20de%20programa/Mozilla/Firefox/Profiles/70ra2fui.default/extensions/timeout406COWPATH@onekin.org/content/default/cowpath.xsd">
+<webflow id="scriptCheck" initial="userscripts">
+	<state id="userscripts" URLPattern="http://userscripts.org/scripts/review/*">
+		<transition event="COWPATH:CLICK" cond="['checkScriptComplexity']" target="JSComplexity">
+			<script>GoTo("http://jscomplexity.org/").Paste("$script").Into("//textarea[@class='code']").Click("//input[@class='button']");</script>
+		</transition>
+		<onentry>
+			<script>Copy("//pre[@id='source']").Into("$script").Copy("//h2[@class='title']/a").Into("$ScriptName");</script>
+		</onentry>
 	</state>
+	<state id="JSComplexity" URLPattern="http://jscomplexity.org/#results">
+		<transition event="COWPATH:CLICK" cond="['back2userscript']" target="userscripts"/>
+		<transition event="COWPATH:CLICK" cond="['complexity2charttool']" target="onlineChartTool">
+			<script>GoTo("http://www.onlinecharttool.com/graph?selected_graph=line").Click("//*[@class='btn-next']").Click("//*[@id='design-param-dataset_options_line_num_groups']/option[4]").Paste("$maintainabilityIndex").Into("//tr[last()]/td[3]/input").Paste("$physicalLOC").Into("//tr[last()]/td[4]/input").Paste("$logicalLOC").Into("//tr[last()]/td[5]/input").Paste("$aggregateCyclomaticComplexity").Into("//tr[last()]/td[6]/input").Paste("$ScriptName").Into("//tr[last()]/td[2]/input").Paste("$maintainabilityIndexText").Into("//input[@class='text' and @id='design-param-datagroup_options_line_group_label_1']").Paste("$physicalLOCText").Into("//input[@class='text' and @id='design-param-datagroup_options_line_group_label_2']").Paste("$logicalLOCText").Into("//input[@class='text' and @id='design-param-datagroup_options_line_group_label_3']").Paste("$aggregateCyclomaticComplexitytext").Into("//input[@class='text' and @id='design-param-datagroup_options_line_group_label_4']").Click("//select[@class='sel07 dropdown dropdown-num_items num_items' and @id='design-param-dataset_options_line_num_items']/option[@selected]/following-sibling::option[1]").Click("//*[@class='btn-next']").Click("//*[@class='btn-next']");</script>
+		</transition>
+		<onentry>
+			<script>Copy("//*[@class='results']/li[1]/span[2]").Into("$maintainabilityIndex").Copy("//*[@class='results']/li[2]/span[2]").Into("$physicalLOC").Copy("//*[@class='results']/li[3]/span[2]").Into("$logicalLOC").Copy("//*[@class='results']/li[4]/span[2]").Into("$aggregateCyclomaticComplexity").Copy("//*[@class='results']/li[1]/span[1]").Into("$maintainabilityIndexText").Copy("//*[@class='results']/li[2]/span[1]").Into("$physicalLOCText").Copy("//*[@class='results']/li[3]/span[1]").Into("$logicalLOCText").Copy("//*[@class='results']/li[4]/span[1]").Into("$aggregateCyclomaticComplexitytext");</script>
+		</onentry>
+	</state>
+	<state id="onlineChartTool" URLPattern="http://www.onlinecharttool.com/graph?selected_graph=line">
+		<transition event="COWPATH:CLICK" cond="['back2userscript']" target="userscripts"/>
+	</state>
+</webflow>
 </scxml>
-

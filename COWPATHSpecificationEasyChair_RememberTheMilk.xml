@@ -1,45 +1,41 @@
-<scxml initial="COWPATH_state" name="" version="1.0" xmlns="http://www.w3.org/2005/07/scxml" clock="true" notes="true" previewEnable="false"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-	<state id="COWPATH_state">
-		<initial>
-			<transition event="COWPATH:LOAD" cond="https://www.easychair.org/conferences/review_all.cgi?*" target="https://www.easychair.org/conferences/review_all.cgi?*"/>
-		</initial>
-		<state id="https://www.easychair.org/conferences/review_all.cgi?*">			
-			<transition event="COWPATH:LOAD" cond="https://www.easychair.org/conferences/review_add.cgi?*" target="https://www.easychair.org/conferences/review_add.cgi?*"/>
-			<transition event="COWPATH:LOAD" cond="https://www.easychair.org/conferences/submission_info_show.cgi?*" target="https://www.easychair.org/conferences/submission_info_show.cgi?*"/>
-			<transition event="COWPATH:CLICK" cond="easychair2rememberMilk" target="https://www.rememberthemilk.com/home/*">
-				<script>GoTo("https://www.rememberthemilk.com/home/jdesosa/#section.tasks").Script("var reviewFolder='reviews: ' + GM_getValue('$reviewTitles'); GM_setValue('$reviewFolder',reviewFolder);").Paste("$reviewFolder").Into("//*[@id='add-text']");</script>
-			</transition>
-			<onentry>
-				<script>Copy("//*[@class='oddgreen']/td[2]/i/text()").Into("$reviewTitles");</script>
-			</onentry>
-		</state>
-		<state id="https://www.rememberthemilk.com/home/*">
-			<transition event="COWPATH:CLICK" cond="rememberMilk2easychair" target="https://www.easychair.org/conferences/review_all.cgi?*"/>
-		</state>
-		<state id="https://www.easychair.org/conferences/review_add.cgi?*">
-			<transition event="COWPATH:CLICK" cond="addReview2easychair" target="https://www.easychair.org/conferences/review_all.cgi?*"/>
-			<transition event="COWPATH:CLICK" cond="easychair2uni-trier" target="http://dblp.uni-trier.de/pers/*">
-				<script>GoTo("http://dblp.uni-trier.de/").Paste("$author").Into("//*[@NAME='q']").Click("//*[@VALUE='Submit']");</script>
-			</transition>			
-			<onentry>
-				<script>Copy("//*[text()='Authors:']/../../td[2]/text()","(.*?)( and |,|$)").Into("$author");</script>
-			</onentry>
-		</state>
-		<state id="http://dblp.uni-trier.de/pers/*">
-			<transition event="COWPATH:CLICK" cond="uni-trier2easychair" target="https://www.easychair.org/conferences/review_add.cgi?*"/>
-		</state>
-		<state id="https://www.easychair.org/conferences/submission_info_show.cgi?*">
-			<transition event="COWPATH:CLICK" cond="submission2easychair" target="https://www.easychair.org/conferences/review_all.cgi?*"/>
-			<transition event="COWPATH:CLICK" cond="easychair2grammarly" target="https://ed.grammarly.com/register/signup/report_pale/?newv=1">
-				<script>GoTo("http://www.grammarly.com/").Paste("$abstract").Into("//*[@ID='maintextarea']").Click("//*[@id='check_btn']");</script>
-			</transition>
-			<onentry>
-				<script>Copy("//*[text()='Abstract:']/../td[2]/text()").Into("$abstract");</script>
-			</onentry>
-		</state>
-		<state id="https://ed.grammarly.com/register/signup/report_pale/?newv=1">
-			<transition event="COWPATH:CLICK" cond="grammarly2easychair" target="https://www.easychair.org/conferences/submission_info_show.cgi?*"/>
-		</state>		
+<scxml version="1.0" xmlns="http://www.w3.org/2005/07/scxml" clock="true" notes="true" previewEnable="false" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3.org/2005/07/scxml file:///C:/Documents%20and%20Settings/jdesosa/Datos%20de%20programa/Mozilla/Firefox/Profiles/70ra2fui.default/extensions/timeout406COWPATH@onekin.org/content/default/cowpath.xsd">
+<webflow id="reviewArticle" initial="allReviews">
+	<state id="allReviews" URLPattern="https://www.easychair.org/conferences/review_all.cgi?*">
+		<transition event="HOST:CLICK" cond="['//*[@src='/images/add.png']/..']" target="addReview"/>
+		<transition event="HOST:CLICK" cond="['//*[@src='/images/about.png']/..']" target="submissionInfo"/>
+		<transition event="COWPATH:CLICK" cond="['addToDo']" target="rememberthemilk">
+			<script>GoTo("https://www.rememberthemilk.com/home/jdesosa/#section.tasks").Script("var reviewFolder='reviews: ' + GM_getValue('$reviewTitles'); GM_setValue('$reviewFolder',reviewFolder);").Paste("$reviewFolder").Into("//*[@id='add-text']");</script>
+		</transition>
+		<onentry>
+			<script>Copy("//*[@class='oddgreen']/td[2]/i/text()").Into("$reviewTitles");</script>
+		</onentry>
 	</state>
+	<state id="rememberthemilk" URLPattern="https://www.rememberthemilk.com/home/*">
+		<transition event="COWPATH:CLICK" cond="['back2easychair']" target="allReviews"/>
+	</state>
+	<state id="addReview" URLPattern="https://www.easychair.org/conferences/review_add.cgi?*">
+		<transition event="HOST:CLICK" cond="['//td[@title='reviews for papers assigned to you']']" target="allReviews"/>	
+		<transition event="COWPATH:CLICK" cond="['checkAuthorWorks']" target="dblp">
+			<script>GoTo("http://dblp.uni-trier.de/").Paste("$author").Into("//*[@NAME='q']").Click("//*[@VALUE='Submit']");</script>
+		</transition>
+		<onentry>
+			<script>Copy("//*[text()='Authors:']/../../td[2]/text()","(.*?)( and |,|$)").Into("$author");</script>
+		</onentry>
+	</state>
+	<state id="dblp" URLPattern="http://dblp.uni-trier.de/pers/*">
+		<transition event="COWPATH:CLICK" cond="['back2article']" target="addReview"/>
+	</state>
+	<state id="submissionInfo" URLPattern="https://www.easychair.org/conferences/submission_info_show.cgi?*">
+		<transition event="HOST:CLICK" cond="['//td[@title='reviews for papers assigned to you']']" target="allReviews"/>	
+		<transition event="COWPATH:CLICK" cond="['check4plagiarism']" target="grammarReport">
+			<script>GoTo("http://www.grammarly.com/").Paste("$abstract").Into("//*[@ID='maintextarea']").Click("//*[@id='check_btn']");</script>
+		</transition>
+		<onentry>
+			<script>Copy("//*[text()='Abstract:']/../td[2]/text()").Into("$abstract");</script>
+		</onentry>
+	</state>
+	<state id="grammarReport" URLPattern="https://ed.grammarly.com/register/signup/report_pale/?newv=1">
+		<transition event="COWPATH:CLICK" cond="['back2easychair']" target="submissionInfo"/>
+	</state>
+</webflow>
 </scxml>
-

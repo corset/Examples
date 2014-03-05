@@ -1,29 +1,21 @@
-<scxml initial="COWPATH_state" name="" version="1.0" xmlns="http://www.w3.org/2005/07/scxml" clock="true" notes="true" previewEnable="false"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-	<state id="COWPATH_state">
-		<initial>
-			<transition event="COWPATH:LOAD" cond="http://www.amazon.com/*=books*" target="http://www.amazon.com/*=books*"/>
-		</initial>
-		<state id="http://www.amazon.com/*=books*">
-			<transition event="COWPATH:CLICK" cond="amazon2alibris" target="http://www.alibris.co.uk/booksearch?*">
+<scxml clock="true" notes="true" previewEnable="false" xmlns="http://www.w3.org/2005/07/scxml" version="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3.org/2005/07/scxml file:///C:/Documents%20and%20Settings/jdesosa/Datos%20de%20programa/Mozilla/Firefox/Profiles/70ra2fui.default/extensions/timeout406COWPATH@onekin.org/content/default/cowpath.xsd">
+	<webflow id="bookInformation" initial="amazon">
+		<state id="amazon" URLPattern="http://www.amazon.com/*=books*">
+			<transition event="COWPATH:CLICK" cond="['amazon2alibris']" target="alibris">
 				<script>GoTo("http://www.alibris.co.uk/booksearch").Paste("$bookIsbn").Into("//*[@id='searchBox']").Click("//*[@alt='go']");</script>
 			</transition>
 			<onentry>
 				<script>Copy("//div[@id='detail-bullets'][1]//li/b[text()='ISBN-10:']/../text()").Into("$bookIsbn");</script>
 			</onentry>
 		</state>
-		<state id="http://www.alibris.co.uk/booksearch?*">
-			<transition event="COWPATH:CLICK" cond="alibris2amazon" target="http://www.amazon.com/*=books*"/>
-			<transition event="COWPATH:CLICK" cond="alibris2goodReads" target="http://www.goodreads.com/book/show/*">
+		<state id="alibris" URLPattern="http://www.alibris.co.uk/booksearch?*">
+			<transition event="COWPATH:CLICK" cond="['back2amazon']" target="amazon"/>
+			<transition event="COWPATH:CLICK" cond="['alibris2goodreads']" target="goodreads">
 				<script>GoTo("http://www.goodreads.com/book").Paste("$bookIsbn").Into("//*[@id='explore_search_query']").Click("//*[@class='searchButton button']");</script>
 			</transition>
 		</state>
-		<state id="http://www.goodreads.com/book/show/*">
-			<transition event="COWPATH:CLICK" cond="goodreads2amazon" target="http://www.amazon.com/*=books*"/>
+		<state id="goodreads" URLPattern="http://www.goodreads.com/book/show/*">
+			<transition event="COWPATH:CLICK" cond="['back2amazon']" target="amazon"/>
 		</state>
-	</state>
+	</webflow>
 </scxml>
-
-
-
-
-

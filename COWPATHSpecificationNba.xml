@@ -1,29 +1,25 @@
-<scxml initial="COWPATH_state" name="" version="1.0" xmlns="http://www.w3.org/2005/07/scxml" clock="true" notes="true" previewEnable="false"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-	<state id="COWPATH_state">
-		<initial>
-			<transition event="COWPATH:LOAD" cond="http://www.nba.com/teams/" target="http://www.nba.com/teams/"/>
-		</initial>
-		<state id="http://www.nba.com/teams/" structurePattern="/html/body/div[@class='nbaPage']/div[@id='nbaMainSection']/div[@id='nbaContent']/div[@id='nbateamsTable']/table/tbody/tr/td/table/tbody/tr[1]/td[@class='nbateamname']">
-			<transition event="COWPATH:CLICK" cond="nba2wikipedia" target="http://en.wikipedia.org/wiki/*">
+<scxml xmlns="http://www.w3.org/2005/07/scxml" clock="true" notes="true" previewEnable="false" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3.org/2005/07/scxml file:///C:/Documents%20and%20Settings/jdesosa/Datos%20de%20programa/Mozilla/Firefox/Profiles/70ra2fui.default/extensions/timeout406COWPATH@onekin.org/content/default/cowpath.xsd">
+	<webflow id="nbaTeamInfo" initial="nba">
+		<state id="nba" URLPattern="http://www.nba.com/teams/">
+			<transition event="COWPATH:CLICK" cond="['/html/body/div[@class='nbaPage']/div[@id='nbaMainSection']/
+					div[@id='nbaContent']/div[@id='nbateamsTable']/table/tbody/tr/td/table/tbody/tr[1]/td[@class='nbateamname']']" target="wikipedia">
 				<script>GoTo("http://www.wikipedia.org/").Paste("$team_name").Into("*//input[@id='searchInput']").Click("*//input[@class='formBtn']");</script>
 			</transition>
 			<onentry>
 				<script>Copy("a").Into("$team_name");</script>
 			</onentry>
 		</state>
-		<state id="http://en.wikipedia.org/wiki/*" structurePattern="//table[@class='sortable jquery-tablesorter']//td[3]">
-			<transition event="COWPATH:CLICK" cond="wikipedia2nba" target="http://www.nba.com/teams/"/>
-			<transition event="COWPATH:CLICK" cond="wikipedia2yahoo" target="http://search.yahoo.com/*">
+		<state id="wikipedia" URLPattern="http://en.wikipedia.org/wiki/*">
+			<transition event="COWPATH:CLICK" cond="['back2nba']" target="nba"/>
+			<transition event="COWPATH:CLICK" cond="['//table[@class='sortable jquery-tablesorter']//td[3]']" target="yahoo">
 				<script>GoTo("http://search.yahoo.com/").Paste("$player_name").Into("//input[@id='yschsp']").Click("//input[@value='Search']");</script>
 			</transition>
 			<onentry>
 				<script>Copy("a").Into("$player_name");</script>
 			</onentry>
 		</state>
-		<state id="http://search.yahoo.com/*">
-			<transition event="COWPATH:CLICK" cond="yahoo2nba" target="http://www.nba.com/teams/"/>
+		<state id="yahoo" URLPattern="http://search.yahoo.com/*">
+			<transition event="COWPATH:CLICK" cond="['back2nba']" target="nba"/>
 		</state>
-	</state>
+	</webflow>
 </scxml>
-
-
