@@ -4,7 +4,7 @@
 		<transition event="HOST:CLICK" cond="['//*[@src='/images/add.png']/..']" target="addReview"/>
 		<transition event="HOST:CLICK" cond="['//*[@src='/images/about.png']/..']" target="submissionInfo"/>
 		<transition event="COWPATH:CLICK" cond="['addToDo']" target="toodledo">
-			<script>GoTo("http://www.toodledo.com/tasks/index.php").Click("//*[@id='tlbr_new']").Paste("$reviewTitles").Into("//*[@id='title']");</script>
+			<script>GoTo("http://www.toodledo.com/tasks/index.php#").Click("//*[@id='tlbr_new']").Paste("$reviewTitles").Into("//*[@id='title']");</script>
 		</transition>
 		<onentry>
 			<script>Copy("//*[@class='oddgreen']/td[2]/i/text()").Into("$reviewTitles");</script>
@@ -39,5 +39,3 @@
 	</state>
 </webflow>
 </scxml>
-
-	

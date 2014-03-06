@@ -27,7 +27,7 @@
 				<transition event="HOST:CLICK" cond="['//li[contains(@id,'13')]/nav/ul/li[2]/div/a']" target="bibtex2013"/>
 			</state>
 			<state id="bibtex2013" URLPattern="http://dblp.uni-trier.de/rec/bibtex/*13">
-				<transition event="COWPATH:CLICK" cond="['back2author']" target="authorPublications"/>
+				<transition event="COWPATH:CLICK" cond="['back2authorPublications']" target="authorPublications"/>
 			</state>
 		</state>
 	</webflow>
