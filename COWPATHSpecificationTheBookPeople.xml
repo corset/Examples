@@ -1,5 +1,5 @@
 <scxml version="1.0" xmlns="http://www.w3.org/2005/07/scxml" clock="true" notes="true" previewEnable="false" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3.org/2005/07/scxml file:///C:/Documents%20and%20Settings/jdesosa/Datos%20de%20programa/Mozilla/Firefox/Profiles/70ra2fui.default/extensions/timeout406COWPATH@onekin.org/content/default/cowpath.xsd">
-<webflow id="bookInformaation" initial="thebookpeople">
+<webflow id="bookInformation" initial="thebookpeople">
 	<state id="thebookpeople" URLPattern="http://www.thebookpeople.co.uk/webapp/wcs/stores/servlet/qs_product_tbp?productId=*">
 		<transition event="COWPATH:CLICK" cond="['thebookpeople2alibris']" target="alibris">
 			<script>GoTo("http://www.alibris.co.uk/booksearch").Paste("$bookIsbn").Into("//*[@id='searchBox']").Click("//*[@alt='go']");</script>
