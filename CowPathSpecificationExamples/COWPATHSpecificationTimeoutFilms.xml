@@ -1,4 +1,4 @@
-<scxml initial="COWPATH_state" name="" version="1.0" xmlns="http://www.w3.org/2005/07/scxml" 
+<scxml name="" version="1.0" xmlns="http://www.w3.org/2005/07/scxml" 
 			 clock="true" notes="true" previewEnable="false" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<webflow id="timeoutFilms" initial="films">
 		<state id="films" URLPattern="http://www.timeout.com/london/film/*">
