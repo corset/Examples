@@ -1,5 +1,5 @@
 <scxml name="" version="1.0" xmlns="http://www.w3.org/2005/07/scxml" 
-			 clock="true" notes="true" previewEnable="false" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	clock="true" notes="true" previewEnable="false" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<webflow id="timeoutRestaurants" initial="restaurants">
 		<state id="restaurants" URLPattern="http://www.timeout.com/london/restaurants/*">
 			<transition event="COWPATH:CLICK" cond="['go2SquareMeal']" target="squaremealList">

@@ -1,4 +1,7 @@
-<scxml clock="true" notes="true" previewEnable="false" xmlns="http://www.w3.org/2005/07/scxml" version="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3.org/2005/07/scxml file:///C:/Documents%20and%20Settings/jdesosa/Datos%20de%20programa/Mozilla/Firefox/Profiles/70ra2fui.default/extensions/timeout406COWPATH@onekin.org/content/default/cowpath.xsd">
+<scxml version="1.0" xmlns="http://www.w3.org/2005/07/scxml" 
+	clock="true" notes="true" previewEnable="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<preview>https://dl.dropboxusercontent.com/u/14769158/checking_publications_at_DBLP.html</preview>
+	<preview>https://dl.dropboxusercontent.com/u/14769158/checking_for_plagiarism_at_Grammarly.html</preview>
 	<webflow id="manuscriptReview">
 		<state id="flow1" initial="submissionInfo">
 			<state id="submissionInfo" URLPattern="https://www.easychair.org/conferences/submission_info_show.cgi?*">
