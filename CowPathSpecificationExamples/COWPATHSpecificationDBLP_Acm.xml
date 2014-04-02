@@ -1,8 +1,14 @@
-<scxml clock="true" notes="true" previewEnable="false" xmlns="http://www.w3.org/2005/07/scxml" version="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3.org/2005/07/scxml file:///C:/Documents%20and%20Settings/jdesosa/Datos%20de%20programa/Mozilla/Firefox/Profiles/70ra2fui.default/extensions/timeout406COWPATH@onekin.org/content/default/cowpath.xsd">
+<scxml version="1.0" xmlns="http://www.w3.org/2005/07/scxml" 
+	clock="true" notes="true" previewEnable="false" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<webflow id="findArticleACM" initial="authorPublications">
 		<state id="authorPublications" URLPattern="http://dblp.uni-trier.de/pers/*">
 			<transition event="COWPATH:CLICK" cond="['//*[@class='data']']" target="acmResults">
-				<script>GoTo("http://dl.acm.org/advsearch.cfm?coll=DL&amp;dl=ACM").Script("var title=JSON.stringify(GM_getValue('$title')); GM_setValue('$title',title);").Paste("$title").Into("//input[@name='allofem']").Click("//input[@name='Go']");</script>
+				<script>
+					GoTo("http://dl.acm.org/advsearch.cfm?coll=DL&amp;dl=ACM").
+					Script("var title=JSON.stringify(GM_getValue('$title')); GM_setValue('$title',title);").
+					Paste("$title").Into("//input[@name='allofem']").
+					Click("//input[@name='Go']");
+				</script>
 			</transition>
 			<onentry>
 				<script>Copy("span[last()]").Into("$title");</script>
@@ -17,3 +23,6 @@
 		</state>
 	</webflow>
 </scxml>
+
+
+

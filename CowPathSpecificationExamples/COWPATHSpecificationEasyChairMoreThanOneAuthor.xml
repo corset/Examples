@@ -20,10 +20,12 @@
 		</state>
 		<state id="flow2" initial="addReview">
 			<state id="addReview" URLPattern="https://www.easychair.org/conferences/review_add.cgi?*">
-				<transition event="COWPATH:CLICK" cond="['split('//*[@id='reviewform']//td/b[text()='Authors:']/../../td[2]',' and |,')']" target="authorPublications">
+				<transition event="COWPATH:CLICK" cond="['split('//*[@id='reviewform']//td/b[text()='Authors:']/../../td[2]',' and |,')']" 
+					target="authorPublications">
 					<script>
 						GoTo("http://dblp.uni-trier.de/").
-						Paste("$firstAuthor").Into("//div[@id='main']/center/table/tbody/tr/td/form/input[1]").Click("//*[@VALUE='Submit']");
+						Paste("$firstAuthor").Into("//div[@id='main']/center/table/tbody/tr/td/form/input[1]").
+						Click("//*[@VALUE='Submit']");
 					</script>
 				</transition>
 				<onentry>
@@ -40,5 +42,6 @@
 		</state>
 	</webflow>
 </scxml>
+
 
 

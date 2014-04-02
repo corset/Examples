@@ -1,5 +1,5 @@
 <scxml version="1.0" xmlns="http://www.w3.org/2005/07/scxml" 
-	clock="true" notes="true" previewEnable="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	clock="true" notes="true" previewEnable="true" producerEmail="jdesosa@ikerlan.es" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<preview>https://dl.dropboxusercontent.com/u/14769158/checking_publications_at_DBLP.html</preview>
 	<preview>https://dl.dropboxusercontent.com/u/14769158/checking_for_plagiarism_at_Grammarly.html</preview>
 	<webflow id="manuscriptReview">

@@ -1,15 +1,31 @@
-<scxml version="1.0" xmlns="http://www.w3.org/2005/07/scxml" clock="true" notes="true" previewEnable="false" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3.org/2005/07/scxml file:///C:/Documents%20and%20Settings/jdesosa/Datos%20de%20programa/Mozilla/Firefox/Profiles/70ra2fui.default/extensions/timeout406COWPATH@onekin.org/content/default/cowpath.xsd">
-<webflow id="researchgate" initial="dblp">
-	<state id="dblp" URLPattern="http://dblp.uni-trier.de/pers/*">
-		<transition event="COWPATH:CLICK" cond="['//*[@class='data']']" target="researchgate">
-			<script>GoTo("https://www.researchgate.net/literature.Literature.html?nav=pubs").Click("//*[@class='js-add btn btn-promote btn-large btn-fullwidth']").Click("//*[@class='dialog-nav-item item-link option-1 action-claim-publications']").Click("//*[@class='item-link option-3 action-manual-entry']").Paste("$title").Into("//*[@id='rg-modules-literature-actions-AddPublicationsDialogPublicationTitleForm-publicationTitle']").Click("//*[@value='Continue']").Paste("$yearPublication").Into("//*[@id='publication-year']").Paste("$firstAuthor").Into("//*[@id='rg-modules-literature-actions-AddPublicationsDialogManualForm-authors']");</script>
-		</transition>
-		<onentry>
-			<script>Copy("span[last()]").Into("$title").Copy("span[1]").Into("$firstAuthor").Copy("a[last()]","[0-9]+").Into("$yearPublication");</script>
-		</onentry>
-	</state>
-	<state id="researchgate" URLPattern="https://www.researchgate.net/literature.Literature.html?nav=pubs">
-		<transition event="COWPATH:CLICK" cond="['back2dblp']" target="dblp"/>
-	</state>
-</webflow>
+<scxml version="1.0" xmlns="http://www.w3.org/2005/07/scxml" 
+	clock="true" notes="true" previewEnable="false" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<webflow id="addResearchgate" initial="dblp">
+		<state id="dblp" URLPattern="http://dblp.uni-trier.de/pers/*">
+			<transition event="COWPATH:CLICK" cond="['//*[@class='data']']" target="researchgate">
+				<script>
+					GoTo("https://www.researchgate.net/literature.Literature.html?nav=pubs").
+					Click("//*[@class='js-add btn btn-promote btn-large btn-fullwidth']").
+					Click("//*[@class='dialog-nav-item item-link option-1 action-claim-publications']").
+					Click("//*[@class='item-link option-3 action-manual-entry']").
+					Paste("$title").Into("//*[@id='rg-modules-literature-actions-AddPublicationsDialogPublicationTitleForm-publicationTitle']").
+					Click("//*[@value='Continue']").
+					Paste("$yearPublication").Into("//*[@id='publication-year']").
+					Paste("$firstAuthor").Into("//*[@id='rg-modules-literature-actions-AddPublicationsDialogManualForm-authors']");
+				</script>
+			</transition>
+			<onentry>
+				<script>
+					Copy("span[last()]").Into("$title").
+					Copy("span[1]").Into("$firstAuthor").
+					Copy("a[last()]","[0-9]+").Into("$yearPublication");
+				</script>
+			</onentry>
+		</state>
+		<state id="researchgate" URLPattern="https://www.researchgate.net/literature.Literature.html?nav=pubs">
+			<transition event="COWPATH:CLICK" cond="['back2dblp']" target="dblp"/>
+		</state>
+	</webflow>
 </scxml>
+
+
