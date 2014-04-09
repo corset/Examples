@@ -22,9 +22,7 @@
 			<transition event="COWPATH:CLICK" cond="['go2Facebook']" target="facebook">
 				<script>GoTo("https://www.facebook.com/events/list").
 					Click("//*[text()='Create event']").
-					Paste("$restaurantName").Into("//*[@name='title']").
-					Paste("$description").Into("/html/body/div[@role='dialog'][2]/div/div/div/
-					form/div[2]/span/div/table/tbody/tr[2]/td/div/div/div[2]/div/div/textarea");
+					Paste("$restaurantName").Into("//*[@name='title']").Paste("$description").Into("/html/body/div[@role='dialog'][2]/div/div/div/form/div[2]/span/div/table/tbody/tr[2]/td/div/div/div[2]/div/div/textarea");
 				</script>
 			</transition>
 			<onentry>
