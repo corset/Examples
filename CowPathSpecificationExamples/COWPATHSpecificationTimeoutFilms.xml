@@ -3,10 +3,9 @@
 	<webflow id="timeoutFilms" initial="films">
 		<state id="films" URLPattern="http://www.timeout.com/london/film/*">
 			<transition event="COWPATH:CLICK" cond="['go2Imdb']" target="imdbFilmsList">
-					<script>
-							GoTo("http://www.imdb.com/list/oMJaW27eArE/").
-							Paste("$filmTitle").Into("//*[@id='navbar-query']").
-							Click("//*[@id='navbar-submit-button']");
+					<script>GoTo("http://www.imdb.com/list/oMJaW27eArE/").
+						Paste("$filmTitle").Into("//*[@id='navbar-query']").
+						Click("//*[@id='navbar-submit-button']");
 					</script>
 				</transition>
 				<onentry>
@@ -20,15 +19,16 @@
 		<state id="imdbFilms" URLPattern="http://www.imdb.com/title/*">
 			<transition event="COWPATH:CLICK" cond="['back2Films']" target="films"/>
 			<transition event="COWPATH:CLICK" cond="['go2Facebook']" target="facebook">
-				<script>
-					GoTo("https://www.facebook.com/events/list").
+				<script>GoTo("https://www.facebook.com/events/list").
 					Click("//*[text()='Create event']").
 					Paste("$filmTitle").Into("//*[@name='title']").
-					Paste("$description").Into("//*[@name='details_text']");
+					Paste("$description").
+					Into("/html/body/div[@role='dialog'][2]/div/div/div/form/div[2]/span/div/
+						  table/tbody/tr[2]/td/div/div/div[2]/div/div/textarea");
 				</script>
 			</transition>
 			<onentry>
-				<script>Copy("//*[@itemprop='description']").Into("$description");</script>
+				<script>Copy("//td[@id='overview-top']/p[@ itemprop='description']").Into("$description");</script>
 			</onentry>
 		</state>
 		<state id="facebook" URLPattern="https://www.facebook.com/events/list">

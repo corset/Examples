@@ -4,7 +4,7 @@
 		<state id="allReviews" URLPattern="https://www.easychair.org/conferences/review_all.cgi?*">
 			<transition event="HOST:CLICK" cond="['//*[@src='/images/add.png']/..']" target="addReview"/>
 			<transition event="HOST:CLICK" cond="['//*[@src='/images/about.png']/..']" target="submissionInfo"/>
-			<transition event="COWPATH:CLICK" cond="['addToDo']" target="toodledo">
+			<transition event="COWPATH:CLICK" cond="['addToDo']" target="Toodledo">
 				<script>
 					GoTo("http://www.toodledo.com/tasks/index.php#").
 					Click("//*[@id='tlbr_new']").
@@ -15,7 +15,7 @@
 				<script>Copy("//*[@class='oddgreen']/td[2]/i/text()").Into("$reviewTitles");</script>
 			</onentry>
 		</state>
-		<state id="toodledo" URLPattern="http://www.toodledo.com/tasks/index.php#">
+		<state id="Toodledo" URLPattern="http://www.toodledo.com/tasks/index.php#">
 			<transition event="COWPATH:CLICK" cond="['back2easychair']" target="allReviews"/>
 		</state>
 		<state id="addReview" URLPattern="https://www.easychair.org/conferences/review_add.cgi?*">
@@ -52,6 +52,9 @@
 		</state>
 	</webflow>
 </scxml>
+
+
+
 
 
 
