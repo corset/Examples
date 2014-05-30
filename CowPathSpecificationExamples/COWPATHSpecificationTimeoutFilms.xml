@@ -1,37 +1,29 @@
-<scxml version="1.0" xmlns="http://www.w3.org/2005/07/scxml" 
-	clock="true" notes="true" previewEnable="false" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<scxml version="1.0" xmlns="http://www.w3.org/2005/07/scxml" clock="true" notes="true" previewEnable="false" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<webflow id="timeoutFilms" initial="films">
-		<state id="films" URLPattern="http://www.timeout.com/london/film/*">
-			<transition event="COWPATH:CLICK" cond="['go2Imdb']" target="imdbFilmsList">
-					<script>GoTo("http://www.imdb.com/list/oMJaW27eArE/").
-						Paste("$filmTitle").Into("//*[@id='navbar-query']").
-						Click("//*[@id='navbar-submit-button']");
-					</script>
-				</transition>
-				<onentry>
-					<script>Copy("//*[@id='mainContent']/div/h1/text()").Into("$filmTitle");</script>
-				</onentry>
-		</state>		
-		<state id="imdbFilmsList" URLPattern="http://www.imdb.com/find?*">
-			<transition event="COWPATH:CLICK" cond="['back2Films']" target="films"/>
-			<transition event="HOST:CLICK" cond="['//*[@class='result_text']/a']" target="imdbFilms"/>
-		</state>
-		<state id="imdbFilms" URLPattern="http://www.imdb.com/title/*">
-			<transition event="COWPATH:CLICK" cond="['back2Films']" target="films"/>
-			<transition event="COWPATH:CLICK" cond="['go2Facebook']" target="facebook">
-				<script>GoTo("https://www.facebook.com/events/list").
-					Click("//*[text()='Create event']").
-					Paste("$filmTitle").Into("//*[@name='title']").
-					Paste("$description").Into("/html/body/div[@role='dialog'][2]/div/div/div/form/div[2]/span/div/table/tbody/tr[2]/td/div/div/div[2]/div/div/textarea");
-				</script>
-			</transition>
-			<onentry>
-				<script>Copy("//td[@id='overview-top']/p[@ itemprop='description']").Into("$description");</script>
-			</onentry>
-		</state>
-		<state id="facebook" URLPattern="https://www.facebook.com/events/list">
-			<transition event="COWPATH:CLICK" cond="['back2Films']" target="films"/>
-		</state>
+	  <state id="films" URLPattern="*www.timeout.com/london/film/*">
+		<transition event="COWPATH:CLICK" cond="['go2Imdb']" target="imdbFilmsList">
+		  <script>GoTo("http://www.imdb.com/list/oMJaW27eArE/").Paste("$filmTitle").Into("//*[@id='navbar-query']").Click("//*[@id='navbar-submit-button']");</script>
+		</transition>
+		<onentry>
+			<script>Copy("//*[@id='mainContent']/div/h1/text()").Into("$filmTitle");</script>
+		</onentry>
+	  </state>		
+	  <state id="imdbFilmsList" URLPattern="*www.imdb.com/find?*">
+		<transition event="COWPATH:CLICK" cond="['back2Films']" target="films"/>
+		<transition event="HOST:CLICK" cond="['//*[@class='result_text']/a']" target="imdbFilms"/>
+	  </state>
+	  <state id="imdbFilms" URLPattern="*www.imdb.com/title/*">
+		<transition event="COWPATH:CLICK" cond="['back2Films']" target="films"/>
+		<transition event="COWPATH:CLICK" cond="['go2Facebook']" target="facebook">
+		  <script>GoTo("https://www.facebook.com/events/list").Click("//*[text()='Create event']").Paste("$filmTitle").Into("//*[@name='title']").Paste("$description").Into("/html/body/div[@role='dialog'][2]/div/div/div/form/div[2]/span/div/table/tbody/tr[2]/td/div/div/div[2]/div/div/textarea");</script>
+		</transition>
+		<onentry>
+		  <script>Copy("//td[@id='overview-top']/p[@ itemprop='description']").Into("$description");</script>
+		</onentry>
+	  </state>
+	  <state id="facebook" URLPattern="*www.facebook.com/events/list">
+		<transition event="COWPATH:CLICK" cond="['back2Films']" target="films"/>
+	  </state>
 	</webflow>
 </scxml>		
 

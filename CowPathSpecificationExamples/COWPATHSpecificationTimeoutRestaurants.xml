@@ -1,37 +1,29 @@
-<scxml version="1.0" xmlns="http://www.w3.org/2005/07/scxml" 
-	clock="true" notes="true" previewEnable="false" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<scxml version="1.0" xmlns="http://www.w3.org/2005/07/scxml" clock="true" notes="true" previewEnable="false" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<webflow id="timeoutRestaurants" initial="restaurants">
-		<state id="restaurants" URLPattern="http://www.timeout.com/london/restaurants/*">
-			<transition event="COWPATH:CLICK" cond="['go2SquareMeal']" target="squaremealList">
-				<script>GoTo("http://www.squaremeal.co.uk/restaurants/london/").
-					Paste("$restaurantName").Into("//*[@id='s']").
-					Click("//*[@value='Go']");
-				</script>
-			</transition>
-			<onentry>
-				<script>Copy("//*[@id='mainContent']/div/h1/text()").Into("$restaurantName");</script>
-			</onentry>
-		</state>		
-		<state id="squaremealList" URLPattern="http://www.squaremeal.co.uk/search?*">
-			<transition event="COWPATH:CLICK" cond="['back2Restaurants']" target="restaurants"/>
-			<transition event="HOST:CLICK" cond="['//*[@itemprop='name']']" 
-							  target="squaremeal"/>
-		</state>
-		<state id="squaremeal" URLPattern="http://www.squaremeal.co.uk/restaurants/london/view/*">
-			<transition event="COWPATH:CLICK" cond="['back2Restaurants']" target="restaurants"/>
-			<transition event="COWPATH:CLICK" cond="['go2Facebook']" target="facebook">
-				<script>GoTo("https://www.facebook.com/events/list").
-					Click("//*[text()='Create event']").
-					Paste("$restaurantName").Into("//*[@name='title']").Paste("$description").Into("/html/body/div[@role='dialog'][2]/div/div/div/form/div[2]/span/div/table/tbody/tr[2]/td/div/div/div[2]/div/div/textarea");
-				</script>
-			</transition>
-			<onentry>
-				<script>Copy("//*[@class='description']/p/text()").Into("$description");</script>
-			</onentry>
-		</state>
-		<state id="facebook" URLPattern="https://www.facebook.com/events/list">
-			<transition event="COWPATH:CLICK" cond="['back2Restaurants']" target="restaurants"/>
-		</state>
+	  <state id="restaurants" URLPattern="*www.timeout.com/london/restaurants/*">
+		<transition event="COWPATH:CLICK" cond="['go2SquareMeal']" target="squaremealList">
+		  <script>GoTo("http://www.squaremeal.co.uk/restaurants/london/").Paste("$restaurantName").Into("//*[@id='s']").Click("//*[@value='Go']");</script>
+		</transition>
+		<onentry>
+		  <script>Copy("//*[@id='mainContent']/div/h1/text()").Into("$restaurantName");</script>
+		</onentry>
+	  </state>		
+	  <state id="squaremealList" URLPattern="*www.squaremeal.co.uk/search?*">
+		<transition event="COWPATH:CLICK" cond="['back2Restaurants']" target="restaurants"/>
+		<transition event="HOST:CLICK" cond="['//*[@itemprop='name']']" target="squaremeal"/>
+	  </state>
+	  <state id="squaremeal" URLPattern="*www.squaremeal.co.uk/restaurants/london/view/*">
+		<transition event="COWPATH:CLICK" cond="['back2Restaurants']" target="restaurants"/>
+		<transition event="COWPATH:CLICK" cond="['go2Facebook']" target="facebook">
+		  <script>GoTo("https://www.facebook.com/events/list").Click("//*[text()='Create event']").Paste("$restaurantName").Into("//*[@name='title']").Paste("$description").Into("/html/body/div[@role='dialog'][2]/div/div/div/form/div[2]/span/div/table/tbody/tr[2]/td/div/div/div[2]/div/div/textarea");</script>
+		</transition>
+		<onentry>
+		  <script>Copy("//*[@class='description']/p/text()").Into("$description");</script>
+		</onentry>
+	  </state>
+	  <state id="facebook" URLPattern="*www.facebook.com/events/list">
+		<transition event="COWPATH:CLICK" cond="['back2Restaurants']" target="restaurants"/>
+	  </state>
 	</webflow>
 </scxml>
 

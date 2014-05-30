@@ -1,21 +1,16 @@
-<scxml version="1.0" xmlns="http://www.w3.org/2005/07/scxml" 
-	clock="true" notes="true" previewEnable="false" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<scxml version="1.0" xmlns="http://www.w3.org/2005/07/scxml" clock="true" notes="true" previewEnable="false" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<webflow id="productInfo" initial="ciao">
-		<state id="ciao" URLPattern="http://www.ciao.co.uk/*" structuralPattern="//*[@id='product_image']">
-			<transition event="COWPATH:CLICK" cond="['ciao2PIXmania']" target="PIXmania">
-				<script>
-					GoTo("http://www.pixmania.co.uk/index.html").
-					Paste("$item").Into("//*[@id='search']").
-					Click("//*[@id='search_bttn']");
-				</script>
-			</transition>
-			<onentry>
-				<script>Copy("//*[@id='product_name']").Into("$item");</script>
-			</onentry>
-		</state>
-		<state id="PIXmania" URLPattern="http://www.pixmania.co.uk/search/*">
-			<transition event="COWPATH:CLICK" cond="['back2ciao']" target="ciao"/>
-		</state>
+	  <state id="ciao" URLPattern="*www.ciao.co.uk/*" structuralPattern="//*[@id='product_image']">
+		<transition event="COWPATH:CLICK" cond="['ciao2PIXmania']" target="PIXmania">
+		  <script>GoTo("http://www.pixmania.co.uk/index.html").Paste("$item").Into("//*[@id='search']").Click("//*[@id='search_bttn']");</script>
+		</transition>
+		<onentry>
+		  <script>Copy("//*[@id='product_name']").Into("$item");</script>
+		</onentry>
+	  </state>
+	  <state id="PIXmania" URLPattern="*www.pixmania.co.uk/search/*">
+		<transition event="COWPATH:CLICK" cond="['back2ciao']" target="ciao"/>
+	  </state>
 	</webflow>
 </scxml>
 

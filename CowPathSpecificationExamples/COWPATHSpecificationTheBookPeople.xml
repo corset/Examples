@@ -1,32 +1,22 @@
-<scxml version="1.0" xmlns="http://www.w3.org/2005/07/scxml" 
-    clock="true" notes="true" previewEnable="false" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<scxml version="1.0" xmlns="http://www.w3.org/2005/07/scxml" clock="true" notes="true" previewEnable="false" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<webflow id="bookInformation" initial="thebookpeople">
-		<state id="thebookpeople" 
-		URLPattern="http://www.thebookpeople.co.uk/webapp/wcs/stores/servlet/qs_product_tbp?productId=*">
-			<transition event="COWPATH:CLICK" cond="['thebookpeople2alibris']" target="alibris">
-				<script>
-					GoTo("http://www.alibris.co.uk/booksearch").
-					Paste("$bookIsbn").Into("//*[@id='searchBox']").
-					Click("//*[@alt='go']");
-				</script>
-			</transition>
-			<onentry>
-				<script>Copy("//*[@id='isbn-label']/span/text()").Into("$bookIsbn");</script>
-			</onentry>
-		</state>
-		<state id="alibris" URLPattern="http://www.alibris.co.uk/booksearch?*">
-			<transition event="COWPATH:CLICK" cond="['back2thebookpeople']" target="thebookpeople"/>
-			<transition event="COWPATH:CLICK" cond="['alibris2goodReads']" target="goodreads">
-				<script>
-					GoTo("http://www.goodreads.com/book").
-					Paste("$bookIsbn").Into("//*[@id='explore_search_query']").
-					Click("//*[@class='searchButton button']");
-				</script>
-			</transition>
-		</state>
-		<state id="goodreads" URLPattern="http://www.goodreads.com/book/show/*">
-			<transition event="COWPATH:CLICK" cond="['back2thebookpeople']" target="thebookpeople"/>
-		</state>
+	  <state id="thebookpeople" URLPattern="*www.thebookpeople.co.uk/*/qs_product_tbp?productId=*">
+		<transition event="COWPATH:CLICK" cond="['thebookpeople2alibris']" target="alibris">
+		  <script>GoTo("http://www.alibris.co.uk/booksearch").Paste("$bookIsbn").Into("//*[@id='searchBox']").Click("//*[@alt='go']");</script>
+		</transition>
+		<onentry>
+		  <script>Copy("//*[@id='isbn-label']/span/text()").Into("$bookIsbn");</script>
+		</onentry>
+	  </state>
+	  <state id="alibris" URLPattern="*www.alibris.co.uk/booksearch?*">
+		<transition event="COWPATH:CLICK" cond="['back2thebookpeople']" target="thebookpeople"/>
+		<transition event="COWPATH:CLICK" cond="['alibris2goodReads']" target="goodreads">
+		  <script>GoTo("http://www.goodreads.com/book").Paste("$bookIsbn").Into("//*[@id='explore_search_query']").Click("//*[@class='searchButton button']");</script>
+		</transition>
+	  </state>
+	  <state id="goodreads" URLPattern="*www.goodreads.com/book/show/*">
+		<transition event="COWPATH:CLICK" cond="['back2thebookpeople']" target="thebookpeople"/>
+	  </state>
 	</webflow>
 </scxml>
 

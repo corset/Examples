@@ -1,54 +1,41 @@
-<scxml version="1.0" xmlns="http://www.w3.org/2005/07/scxml" 
-	clock="true" notes="true" previewEnable="false" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<scxml version="1.0" xmlns="http://www.w3.org/2005/07/scxml" clock="true" notes="true" previewEnable="false" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<webflow id="reviewArticle" initial="allReviews">
-		<state id="allReviews" URLPattern="https://www.easychair.org/conferences/review_all.cgi?*">
-			<transition event="HOST:CLICK" cond="['//*[@src='/images/add.png']/..']" target="addReview"/>
-			<transition event="HOST:CLICK" cond="['//*[@src='/images/about.png']/..']" target="submissionInfo"/>
-			<transition event="COWPATH:CLICK" cond="['addToDo']" target="rememberthemilk">
-				<script>
-					GoTo("https://www.rememberthemilk.com/home/jdesosa/#section.tasks").
-					Script("var reviewFolder='reviews: ' + GM_getValue('$reviewTitles'); GM_setValue('$reviewFolder',reviewFolder);").
-					Paste("$reviewFolder").Into("//*[@id='add-text']");
-				</script>
-			</transition>
-			<onentry>
-				<script>Copy("//*[@class='oddgreen']/td[2]/i/text()").Into("$reviewTitles");</script>
+	  <state id="allReviews" URLPattern="*www.easychair.org/conferences/review_all.cgi?*">
+		<transition event="HOST:CLICK" cond="['//*[@src='/images/add.png']/..']" target="addReview"/>
+		<transition event="HOST:CLICK" cond="['//*[@src='/images/about.png']/..']" target="submissionInfo"/>
+		<transition event="COWPATH:CLICK" cond="['addToDo']" target="rememberthemilk">
+		  <script>GoTo("https://www.rememberthemilk.com/home/jdesosa/#section.tasks").Script("var reviewFolder='reviews: ' + GM_getValue('$reviewTitles'); GM_setValue('$reviewFolder',reviewFolder);").Paste("$reviewFolder").Into("//*[@id='add-text']");</script>
+		</transition>
+		<onentry>
+		  <script>Copy("//*[@class='oddgreen']/td[2]/i/text()").Into("$reviewTitles");</script>
+		</onentry>
+	  </state>
+	  <state id="rememberthemilk" URLPattern="*www.rememberthemilk.com/home/*">
+		<transition event="COWPATH:CLICK" cond="['back2easychair']" target="allReviews"/>
+	  </state>
+	  <state id="addReview" URLPattern="*www.easychair.org/conferences/review_add.cgi?*">
+		<transition event="HOST:CLICK" cond="['//td[@title='reviews for papers assigned to you']']" target="allReviews"/>	
+		<transition event="COWPATH:CLICK" cond="['checkAuthorWorks']" target="dblp">
+		  <script>GoTo("http://dblp.uni-trier.de/").Paste("$author").Into("//div[@id='main']/center/table/tbody/tr/td/form/input[1]").Click("//*[@VALUE='Submit']");</script>
+		</transition>
+		<onentry>
+		  <script>Copy("//*[text()='Authors:']/../../td[2]/text()","(.*?)( and |,|$)").Into("$author");</script>
 			</onentry>
 		</state>
-		<state id="rememberthemilk" URLPattern="https://www.rememberthemilk.com/home/*">
-			<transition event="COWPATH:CLICK" cond="['back2easychair']" target="allReviews"/>
+		<state id="dblp" URLPattern="*dblp.uni-trier.de/pers/*">
+		  <transition event="COWPATH:CLICK" cond="['back2article']" target="addReview"/>
 		</state>
-		<state id="addReview" URLPattern="https://www.easychair.org/conferences/review_add.cgi?*">
-			<transition event="HOST:CLICK" cond="['//td[@title='reviews for papers assigned to you']']" target="allReviews"/>	
-			<transition event="COWPATH:CLICK" cond="['checkAuthorWorks']" target="dblp">
-				<script>
-					GoTo("http://dblp.uni-trier.de/").
-					Paste("$author").Into("//div[@id='main']/center/table/tbody/tr/td/form/input[1]").
-					Click("//*[@VALUE='Submit']");
-				</script>
-			</transition>
-			<onentry>
-				<script>Copy("//*[text()='Authors:']/../../td[2]/text()","(.*?)( and |,|$)").Into("$author");</script>
-			</onentry>
+		<state id="submissionInfo" URLPattern="*www.easychair.org/conferences/submission_info_show.cgi?*">
+		  <transition event="HOST:CLICK" cond="['//td[@title='reviews for papers assigned to you']']" target="allReviews"/>	
+		  <transition event="COWPATH:CLICK" cond="['check4plagiarism']" target="grammarReport">
+			<script>GoTo("http://www.grammarly.com/").Paste("$abstract").Into("//*[@ID='maintextarea']").Click("//*[@id='check_btn']");</script>
+		  </transition>
+		  <onentry>
+			<script>Copy("//*[text()='Abstract:']/../td[2]/text()").Into("$abstract");</script>
+		  </onentry>
 		</state>
-		<state id="dblp" URLPattern="http://dblp.uni-trier.de/pers/*">
-			<transition event="COWPATH:CLICK" cond="['back2article']" target="addReview"/>
-		</state>
-		<state id="submissionInfo" URLPattern="https://www.easychair.org/conferences/submission_info_show.cgi?*">
-			<transition event="HOST:CLICK" cond="['//td[@title='reviews for papers assigned to you']']" target="allReviews"/>	
-			<transition event="COWPATH:CLICK" cond="['check4plagiarism']" target="grammarReport">
-				<script>
-					GoTo("http://www.grammarly.com/").
-					Paste("$abstract").Into("//*[@ID='maintextarea']").
-					Click("//*[@id='check_btn']");
-				</script>
-			</transition>
-			<onentry>
-				<script>Copy("//*[text()='Abstract:']/../td[2]/text()").Into("$abstract");</script>
-			</onentry>
-		</state>
-		<state id="grammarReport" URLPattern="https://ed.grammarly.com/register/signup/report_pale/?newv=1">
-			<transition event="COWPATH:CLICK" cond="['back2easychair']" target="submissionInfo"/>
+		<state id="grammarReport" URLPattern="*ed.grammarly.com/register/signup/report_pale/?newv=1">
+		  <transition event="COWPATH:CLICK" cond="['back2easychair']" target="submissionInfo"/>
 		</state>
 	</webflow>
 </scxml>
